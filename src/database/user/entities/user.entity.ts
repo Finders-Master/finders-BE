@@ -43,6 +43,9 @@ export class User {
 
   @Column({ type: 'varchar', nullable: false })
   pictures: string;
+  
+  @Column({ type: 'varchar', nullable: false })
+  code_qr: string;
 
   @Column({ type: 'text', nullable: false })
   contact_emergencies: string;

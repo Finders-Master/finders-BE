@@ -15,6 +15,21 @@ export class HealthServiceDB {
   }
 
 
+  async updateHealth(id: number, userData: any){
+    const data = await this.healthRepository
+    .createQueryBuilder('health')
+    .update('health')
+    .set({
+      allergies: userData.allergies,
+      blood_type: userData.blood_type,
+      medication: userData.medication,
+      diseases: userData.diseases
+    })
+    .where('health.id like :id', { id })
+    .execute()
+
+    return data
+  }
 
   async geInfo(id: any){
     const result = await this.healthRepository

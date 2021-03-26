@@ -37,12 +37,34 @@ export class UserService {
 
     return data
   }
+  async updatePatient(id: number, userData: any){
+    const data = await this.userRepository
+    .createQueryBuilder('angel_user')
+    .update('angel_user')
+    .set({
+      name: userData.name,
+      address: userData.address,
+      id_document: userData.id_document,
+      pictures: userData.pictures,
+      code_qr: userData.code_qr,
+      contact_emergencies: userData.contact_emergencies,
+      institution: userData.institution,
+      health_id: userData.health_id,
+      type_user_id: userData.type_user_id,
+      userguard_id: userData.userguard_id
+    })
+    .where('angel_user.id like :id', { id })
+    .execute()
+
+    return this.getUserById(id)
+  }
+
 
   async getAll(){
     const data = await this.userRepository
       .createQueryBuilder('angel_user')
       .select(['id', 'name','address', 'id_document', 'pictures', 
-      'contact_emergencies', 'institution', 'userguard_id', 'type_user_id', 'health_id'])
+      'contact_emergencies', 'institution', 'userguard_id', 'type_user_id', 'health_id', 'code_qr'])
       .execute()
 
       return data
@@ -53,7 +75,7 @@ export class UserService {
       .createQueryBuilder('angel_user')
       .where('angel_user.id like :id', { id })
       .select(['id', 'name','address', 'id_document', 'pictures', 
-      'contact_emergencies', 'institution', 'userguard_id', 'type_user_id', 'health_id'])
+      'contact_emergencies', 'institution', 'userguard_id', 'type_user_id', 'health_id', 'code_qr'])
       .execute()
       return result[0]
   }
